@@ -27,7 +27,9 @@ namespace PresentationWebApp.Controllers
              * key = [value]
              */
 
-            if (string.IsNullOrEmpty(query))
+            if (string.IsNullOrEmpty(email))
+                ViewData["warning"] = "Enter your email!";
+            else if (string.IsNullOrEmpty(query))
                 ViewData["warning"] = "Type in some question";
             else
                 ViewData["feedback"] = "Thank you for getting in touch with us. We will answer back asap";
