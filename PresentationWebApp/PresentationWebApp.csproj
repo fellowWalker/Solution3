@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Identity\Pages\Account\NewFolder\**" />
+    <Content Remove="Areas\Identity\Pages\Account\NewFolder\**" />
+    <EmbeddedResource Remove="Areas\Identity\Pages\Account\NewFolder\**" />
+    <None Remove="Areas\Identity\Pages\Account\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.10" />
@@ -23,6 +30,10 @@
   <ItemGroup>
     <ProjectReference Include="..\ShoppingCart.Application\ShoppingCart.Application.csproj" />
     <ProjectReference Include="..\ShoppingCart.IOC\ShoppingCart.IOC.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Manage\" />
   </ItemGroup>
 
 </Project>
