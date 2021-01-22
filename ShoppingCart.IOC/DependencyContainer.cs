@@ -17,18 +17,6 @@ namespace ShoppingCart.IOC
     {
         public static void RegisterServices(IServiceCollection services, string connectionString)
         {
-            //When are the instances created?
-            /*     
-             *     Singleton: IoC container will create and share a single instance of a service throughout the application's lifetime.
-             *                 ( many requests > 1 instance)
-                   Transient: The IoC container will create a new instance of the specified service type every time you ask for it.
-                               ( 1 request > multiple instances)
-                   Scoped: IoC container will create an instance of the specified service type once per request and will be shared in a single request.
-                           (1 request > 1 instance)
-            */
-
-            //Shortcut key Ctrl+.
-
             services.AddDbContext<ShoppingCartDbContext>(options =>
                 options.UseSqlServer(connectionString )
                 );
@@ -43,15 +31,13 @@ namespace ShoppingCart.IOC
             services.AddScoped<IMembersService, MembersService>();
 
             services.AddScoped<ICartRepository, CartRepository>();
-            services.AddScoped<ICartService, CartService>();
+            //services.AddScoped<ICartService, CartService>();
 
-
-            //Move Initialization of ShoppingCartDbContext to here and refine the dependencies
-
+            services.AddScoped<ICartProductRepository, CartProductRepository>();
+            //services.AddScoped<ICartProductService, CartProductService>();
 
             services.AddAutoMapper(typeof(AutoMapperConfiguration));
             AutoMapperConfiguration.RegisterMappings();
-
 
         }
     }

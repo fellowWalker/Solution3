@@ -15,6 +15,11 @@
                 {
                     <a href="/Products/Delete?id=@p.Id" class="btn btn-danger">Delete</a>
                 }
+                
+                @if (User.IsInRole("User"))
+                {
+                    <a href="/Cart/Index?id=@p.Id" class="btn btn-success">Add to Cart</a>
+                }
 
             </div>
         </div>
