@@ -7,13 +7,15 @@ using System.Text;
 
 namespace ShoppingCart.Application.Interfaces
 {
-    interface ICartProductService
+    public interface ICartProductService
     {
-        IQueryable<CartViewModel> GetCart();
+        IQueryable<CartProductViewModel> GetCartProduct();
 
-        IQueryable<CartProductViewModel> GetCartProduct(string keyword);
+        IQueryable<CartProductViewModel> GetCartProduct(DateTime dateTime);
 
-        IQueryable<CartProductViewModel> GetCartProduct(int category);
+        IQueryable<CartProductViewModel> GetCartProduct(string product);
+
+        IQueryable<CartProductViewModel> GetCartProduct(int quantity);
 
         CartProductViewModel GetCartProduct(Guid id);
 

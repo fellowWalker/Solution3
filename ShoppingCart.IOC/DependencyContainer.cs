@@ -31,10 +31,10 @@ namespace ShoppingCart.IOC
             services.AddScoped<IMembersService, MembersService>();
 
             services.AddScoped<ICartRepository, CartRepository>();
-            //services.AddScoped<ICartService, CartService>();
+            services.AddScoped<ICartService, CartService>();
 
             services.AddScoped<ICartProductRepository, CartProductRepository>();
-            //services.AddScoped<ICartProductService, CartProductService>();
+            services.AddScoped<ICartProductService, CartProductService>();
 
             services.AddAutoMapper(typeof(AutoMapperConfiguration));
             AutoMapperConfiguration.RegisterMappings();
