@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace ShoppingCart.Domain.Models
 {
@@ -12,10 +10,5 @@ namespace ShoppingCart.Domain.Models
 
         public DateTime DatePlaced { get; set; }
         public string UserEmail { get; set; }
-
-        
-
-
-
     }
 }

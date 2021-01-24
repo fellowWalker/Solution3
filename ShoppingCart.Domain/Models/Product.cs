@@ -39,5 +39,7 @@ namespace ShoppingCart.Domain.Models
         [DefaultValue(false)]
         public bool Disable { get; set; } //to refresh the db,you must always run Add-Migration & Update-Database
 
+        public int Quantity { get; set; }
+
     }
 }

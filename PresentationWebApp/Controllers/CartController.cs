@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ShoppingCart.Application.Interfaces;
@@ -11,41 +8,43 @@ namespace ShoppingCart.Controllers
     public class CartController : Controller
     {
         private ICartProductService _cartProductService;
-        private IOrdersService _orderHistoryService;
+        private IOrdersService _orderService;
         private readonly ILogger<CartController> _logger;
-        public CartController(ICartProductService cartProductService, IOrdersService orderHistoryService, ILogger<CartController> logger)
+        public CartController(ICartProductService cartProductService, IOrdersService ordersService,
+            ILogger<CartController> logger)
         {
             _cartProductService = cartProductService;
-            _orderHistoryService = orderHistoryService;
+            _orderService = ordersService;
             _logger = logger;
         }
 
         public IActionResult Index(string email)
         {
-            var myProduct = _cartProductService.GetCartProduct(email);
+            var myProduct = _cartProductService.GetCartProducts(email);
             return View(myProduct);
         }
 
         public IActionResult DeleteFromCart(Guid id)
         {
             _cartProductService.DeleteCartProduct(id);
-            TempData["feedback"] = "The product was deleted";
+            TempData["feedback"] = "Product was deleted";
 
-            _logger.LogInformation("Product deleted from cart. ID: ", id);
+            _logger.LogInformation("Product deleted from cart of ID: ", id);
 
             return RedirectToAction("Index");
         }
 
-        public IActionResult AddToOrderDetails()
+        public IActionResult AddOrderDetails()
         {
             string email = User.Identity.Name;
-            _orderHistoryService.Checkout(email);
+            string id = User.Identity.Name;
 
-            TempData["feedback"] = "Added to Order";
+            _orderService.Checkout(id, email);
+
             _logger.LogInformation("Product added to OrderDetails. User email: ", email);
+            TempData["feedback"] = "Added to Order";            
 
             return RedirectToAction("Index", "OrderDetails");
-
         }
     }
 }

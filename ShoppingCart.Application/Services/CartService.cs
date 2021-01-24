@@ -1,27 +1,43 @@
-﻿using ShoppingCart.Application.Interfaces;
+﻿using AutoMapper;
+using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
+using ShoppingCart.Domain.Interfaces;
+using ShoppingCart.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ShoppingCart.Application.Services
 {
     public class CartService : ICartService
     {
-        public IQueryable<CartProductViewModel> GetCart()
+        private ICartRepository _cartRepo;
+        private IMembersRepository _memberRepo;
+        private IMapper _mapper;
+
+        public CartService(ICartRepository cartRepo, IMembersRepository memberRepo, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _cartRepo = cartRepo;
+            _memberRepo = memberRepo;
+            _mapper = mapper;
         }
 
-        public IQueryable<CartProductViewModel> GetCart(DateTime dateTime)
+        public void CreateCart(Cart c, string email)
         {
-            throw new NotImplementedException();
+            c.OrderDate = DateTime.Now;
+            c.Email = _memberRepo.GetMember(email).Email;
+            _cartRepo.CreateCart(c);
         }
 
-        public IQueryable<CartProductViewModel> GetCart(string email)
+        public CartViewModel GetCart(string email)
         {
-            throw new NotImplementedException();
+            CartViewModel cvm = new CartViewModel();
+
+            var CartFromDb = _cartRepo.GetCart(email);
+
+            cvm.Id = CartFromDb.Id;
+            cvm.UserEmail = CartFromDb.Email;
+            cvm.DatePlaced = CartFromDb.OrderDate;
+
+            return cvm;
         }
     }
 }

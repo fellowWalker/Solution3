@@ -44,6 +44,8 @@
 <div>
     @if (User.IsInRole("Admin")) {
     @Html.ActionLink("Edit", "Edit", new { })
+    @Html.ActionLink("Hide", "Hide", new { })
+
     } |
     <a asp-action="Index">Back to List</a>
 </div>

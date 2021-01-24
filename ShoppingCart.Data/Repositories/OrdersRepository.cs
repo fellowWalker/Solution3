@@ -9,19 +9,16 @@ namespace ShoppingCart.Data.Repositories
 {
     class OrdersRepository : IOrdersRepository
     {
-
         ShoppingCartDbContext _context;
         public OrdersRepository(ShoppingCartDbContext context)
         {
             _context = context;
-
         }
 
         public void AddOrder(Order order)
         {
             _context.Orders.Add(order);
             _context.SaveChanges();
-
         }
 
         public void AddOrderDetail(OrderDetails orderDetail)

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
 
@@ -16,12 +15,14 @@ namespace PresentationWebApp.Controllers
         private readonly IProductsService _productsService;
         private readonly ICategoriesService _categoriesService;
         private IWebHostEnvironment _env;
+        private readonly ILogger<ProductsController> _logger;
         public ProductsController(IProductsService productsService, ICategoriesService categoriesService,
-             IWebHostEnvironment env )
+             IWebHostEnvironment env, ILogger<ProductsController> logger)
         {
             _productsService = productsService;
             _categoriesService = categoriesService;
             _env = env;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -31,17 +32,18 @@ namespace PresentationWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Search(string keyword) //using a form, and the select list must have name attribute = category
+        public IActionResult Search(string keyword)
         {
             var list = _productsService.GetProducts(keyword).ToList();
 
             return View("Index", list);
         }
 
-
         public IActionResult Details(Guid id)
         {
             var p = _productsService.GetProduct(id);
+            _logger.LogInformation("Product details are shown of ID: ", id);
+
             return View( p);
         }
 
@@ -70,7 +72,6 @@ namespace PresentationWebApp.Controllers
                 {
                     if(f.Length > 0)
                     {
-                        //C:\Users\Ryan\source\repos\SWD62BEP\SWD62BEP\Solution3\PresentationWebApp\wwwroot
                         string newFilename = Guid.NewGuid() + System.IO.Path.GetExtension(f.FileName);
                         string newFilenameWithAbsolutePath = _env.WebRootPath +  @"\Images\" + newFilename;
                         
@@ -89,7 +90,7 @@ namespace PresentationWebApp.Controllers
             }
             catch (Exception ex)
             {
-                //log error
+                _logger.LogInformation("The product could not be added of: ", data);
                 TempData["warning"] = "Product was not added!";
             }
 
@@ -109,16 +110,11 @@ namespace PresentationWebApp.Controllers
             }
             catch (Exception ex)
             {
-                //log your error 
-
+                _logger.LogInformation("Product is Deleted ID: ", id);
                 TempData["warning"] = "Product was not deleted"; //Change from ViewData to TempData
             }
 
             return RedirectToAction("Index");
         }
-
-
-
-
     }
 }

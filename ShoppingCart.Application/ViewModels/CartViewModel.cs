@@ -7,7 +7,7 @@ namespace ShoppingCart.Application.ViewModels
     public class CartViewModel
     {
         public Guid Id { get; set; }
-        public DateTime DateProductOrder { get; set; }
-        public string Email { get; set; }
+        public DateTime DatePlaced { get; set; }
+        public string UserEmail { get; set; }
     }
 }

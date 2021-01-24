@@ -1,18 +1,11 @@
 ﻿using ShoppingCart.Application.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+using ShoppingCart.Domain.Models;
 
 namespace ShoppingCart.Application.Interfaces
 {
     public interface ICartService
     {
-        IQueryable<CartProductViewModel> GetCart();
-
-        IQueryable<CartProductViewModel> GetCart(DateTime dateTime);
-
-        IQueryable<CartProductViewModel> GetCart(string email);
+        void CreateCart(Cart c, string email);
+        CartViewModel GetCart(string email);
     }
 }

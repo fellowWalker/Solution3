@@ -4,4 +4,8 @@
     ViewData["Title"] = "Cart";
 }
 
-@Html.Partial("ViewCartPartial")
+<div class="container">
+    <div class="row">
+        @Html.Partial("ViewCartPartial", Model)
+    </div>
+</div>
